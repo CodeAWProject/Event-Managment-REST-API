@@ -35,22 +35,6 @@ class EventController extends Controller
         );
     }
 
-    protected function shouldIncludeRelation(string $relation): bool
-    {
-        $include = request()->query('include');
-
-        if(!$include) {
-            return false;
-        }
-
-        //array map_with trim will remove all the starting leading spaces and all the ending spaces from any string
-        $relations = array_map('trim' ,explode( ',', $include));
-
-
-        //Check if a specific relation that's passed to this method is inside relations array
-        return in_array($relation, $relations);
-    }
-
     /**
      * Store a newly created resource in storage.
      */
