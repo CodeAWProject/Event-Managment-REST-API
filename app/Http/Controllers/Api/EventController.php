@@ -13,7 +13,7 @@ class EventController extends Controller
      * Display a listing of the resource.
      */
 
-     //Loading all e vents together with the user relationship
+     //Loading all events together with the user relationship
     public function index()
     {
         return EventResource::collection(Event::with('user')->get());
@@ -43,6 +43,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
+        $event->load('user', 'attendees');
         return new EventResource($event);
     }
 
