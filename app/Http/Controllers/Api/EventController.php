@@ -12,9 +12,11 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     //Loading all e vents together with the user relationship
     public function index()
     {
-        return EventResource::collection(Event::all());
+        return EventResource::collection(Event::with('user')->get());
     }
 
     /**
