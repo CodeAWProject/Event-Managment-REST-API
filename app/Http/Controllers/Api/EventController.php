@@ -16,7 +16,24 @@ class EventController extends Controller
      //Loading all events together with the user relationship
     public function index()
     {
-        return EventResource::collection(Event::with('user')->get());
+        $this->shouldIncludeRelation('user');
+        return EventResource::collection(
+            Event::with('user')->paginate()
+        );
+    }
+
+    protected function shouldIncludeRelation(string $relation): bool
+    {
+        $include = request()->query('include');
+
+        if(!$include) {
+            return false;
+        }
+
+        //array map_with trim will remove all the starting leading spaces and all the ending spaces from any string
+        $relations = array_map('trim' ,explode( ',', $include));
+
+        dd($relations);
     }
 
     /**
