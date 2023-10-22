@@ -48,8 +48,12 @@ class AttendeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+
+     //Parameters in the same order as defined inside the route
+    public function destroy(string $event, Attendee $attendee)
     {
-        //
+        $attendee->delete();
+
+        return response(status:204);
     }
 }
