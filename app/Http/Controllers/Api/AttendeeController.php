@@ -14,6 +14,12 @@ class AttendeeController extends Controller
     use CanLoadRelationships;
 
     private array $relations = ['user'];
+
+    public function __construct()
+    {
+       $this-> middleware('auth:sanctum')->except('index', 'show', 'update');
+    }
+
     public function index(Event $event)
     {
 
@@ -62,8 +68,10 @@ class AttendeeController extends Controller
      */
 
      //Parameters in the same order as defined inside the route
-    public function destroy(string $event, Attendee $attendee)
+    public function destroy(Event $event, Attendee $attendee)
     {
+
+        $this->authorize('delete-attendee', [$event, $attendee]);
         $attendee->delete();
 
         return response(status:204);
