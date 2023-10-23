@@ -17,6 +17,13 @@ class EventController extends Controller
     private array $relations = ['user', 'attendees', 'attendees.user'];
 
 
+
+    //User need to be authenticated to add, modify and delete the event
+    public function __construct()
+    {
+       $this-> middleware('auth:sanctum')->except('index', 'show');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -38,6 +45,8 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+     
     public function store(Request $request)
     {
 
@@ -48,7 +57,9 @@ class EventController extends Controller
                 'start_time' => 'required|date',
                 'end_time' => 'required|date|after:start_time'
             ]),
-            'user_id' => 1
+
+            //If the user is not logged in then this statment wouldn't be run
+            'user_id' => $request->user()->id
         ]);
 
         return new EventResource($this->loadRelationships($event));

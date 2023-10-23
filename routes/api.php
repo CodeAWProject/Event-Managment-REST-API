@@ -17,9 +17,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+//Protected route where the user must be logged in
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 
 Route::post('/login', [AuthController::class, 'login']);
 
