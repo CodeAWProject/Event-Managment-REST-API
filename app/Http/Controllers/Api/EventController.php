@@ -20,9 +20,14 @@ class EventController extends Controller
 
 
     //User need to be authenticated to add, modify and delete the event
+
+
+
     public function __construct()
     {
        $this-> middleware('auth:sanctum')->except('index', 'show');
+       //Every method from the policy will be called before a specific action.
+       $this->authorizeResource(Event::class, 'event');
     }
 
     /**
